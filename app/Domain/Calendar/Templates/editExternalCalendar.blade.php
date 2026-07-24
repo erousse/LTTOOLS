@@ -1,0 +1,32 @@
+{!! $tpl->displayNotification() !!}
+
+<h4 class="widgettitle title-light"><i class="fa-regular fa-calendar-plus"></i> {{ __('label.edit_ical') }}</h4>
+{!!  __('label.import_ical_content')  !!}
+
+
+<form action="{{ BASE_URL }}/calendar/editExternal/{{ $values['id'] }}" method="post" class="formModal">
+
+    <input type="hidden" name="save" value="1" />
+    <label for="name">{{ $tpl->__('label.calendar_name') }}:</label>
+    <x-global::forms.text-input id="name" name="name" autocomplete="off" value="{{ $values['name'] }}" /><br />
+
+    <label for="url">{{ $tpl->__('label.ical_url') }}:</label>
+    <x-global::forms.text-input id="url" name="url" autocomplete="off" style="width:300px;" value="{{ $values['url'] }}" /><br />
+
+    <label for="color">{{ $tpl->__('label.color') }}:</label>
+    <input type="text" name="colorClass" autocomplete="off" value="{{ $values['colorClass'] }}"  class="simpleColorPicker"/>
+
+    @dispatchEvent('beforeSubmitButton')
+    <br /><br />
+    <x-global::forms.button tag="input" inputType="submit" name="save" id="save" :labelText="__('buttons.save')" />
+
+
+
+
+    @dispatchEvent('beforeFormClose')
+
+</form>
+
+<script>
+    leantime.ticketsController.initSimpleColorPicker();
+</script>
