@@ -1,0 +1,33 @@
+{
+    "name": "socialiteproviders/auth0",
+    "description": "Auth0 OAuth2 Provider for Laravel Socialite",
+    "license": "MIT",
+    "keywords": [
+        "auth0",
+        "laravel",
+        "oauth",
+        "provider",
+        "socialite"
+    ],
+    "authors": [
+        {
+            "name": "Chase Coney",
+            "email": "chase.coney@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/socialiteproviders/providers/issues",
+        "source": "https://github.com/socialiteproviders/providers",
+        "docs": "https://socialiteproviders.com/auth0"
+    },
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "socialiteproviders/manager": "^4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "SocialiteProviders\\Auth0\\": ""
+        }
+    }
+}

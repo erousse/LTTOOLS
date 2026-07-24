@@ -1,0 +1,30 @@
+name: "Announce Release"
+on:
+  release:
+    types: [created]
+
+jobs:
+  mastodon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - uses: sergeysova/jq-action@v2
+        id: project-name
+        with:
+          cmd: 'jq .name composer.json -r'
+
+      - id: mastodon
+        uses: cbrgm/mastodon-github-action@v2
+        with:
+          access-token: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+          url: https://toot.metasyntactical.com
+          visibility: unlisted
+          message: |
+            We are happy to announce a new release of: ${{ steps.project-name.outputs.value }} ${{ github.ref_name }}
+
+            Packagist: https://packagist.org/packages/${{ steps.project-name.outputs.value }}#${{ github.ref_name }}
+            Release Notes: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+
+            #opensource #php #composer #release

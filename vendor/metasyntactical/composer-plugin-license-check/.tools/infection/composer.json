@@ -1,0 +1,12 @@
+{
+    "require": {
+        "roave/infection-static-analysis-plugin": "^1.25",
+        "vimeo/psalm": "^5.23",
+        "psalm/plugin-phpunit": "^0.19.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
+    }
+}

@@ -1,292 +1,374 @@
-
 <div align="center">
-<a href="https://leantime.io"><img src="https://leantime.io/wp-content/uploads/2023/03/leantime_logo.png" alt="Leantime Logo" width="300"/></a>
 
-# Leantime&reg; 
+# Leantime
 
-⭐ If you find Leantime useful, please star us on GitHub! ⭐
-
-Leantime is an open source project management system for non-project managers.<br />
-We combine strategy, planning and execution while making it easy for everyone on the team to use.<br />
-Built with ADHD, dyslexia and autism in mind. 🧠<br />
-
-💪 As simple as Trello but as feature-rich as Jira<br />
-🔄 A perfect alternative to ClickUp, Monday, or Asana<br />
-🌐 [https://leantime.io](https://leantime.io)<br />
-
-<a href="https://trendshift.io/repositories/2264" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2264" alt="A screenshot of Leantime's my work dashboard showing a few boxes with large metrics represnting todos complete, goals contributing to, scheduled todos. Also shows a day calendar with one task on it and a list of tasks grouped by Overdue, Due this week and Due Later" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[![License Badge](https://img.shields.io/github/license/leantime/leantime?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.en.html)
-[![Docker Hub Badge](https://img.shields.io/docker/pulls/leantime/leantime?style=flat-square)](https://hub.docker.com/r/leantime/leantime)
-![Github Downloads](https://img.shields.io/github/downloads/leantime/leantime/total)
-[![Discord Badge](https://img.shields.io/discord/990001288026677318?label=Discord&style=flat-square)](https://discord.gg/4zMzJtAq9z)
-[![Crowdin](https://badges.crowdin.net/leantime/localized.svg)](https://crowdin.com/project/leantime)
-![GitHub Sponsors](https://img.shields.io/github/sponsors/leantime)
-<br />
-
-  ![alt text](public/assets/images/Screenshots/mywork-v3.5.png "Home Screen")
+Système open source de gestion de projet, conçu pour les personnes qui ne sont pas gestionnaires de projet de métier.
 
 </div>
-<br /><br />
 
-## 🚀 Features* ##
-| Task Management                                                      | Project Planning                             | Information/Knowledge Management        | Administration                                  |
-| -------------------------------------------------------------------- | -------------------------------------------- | --------------------------------------- |-------------------------------------------------|
-| Task management via<br>kanban boards, gantt, table, list and calendar views | Project Dashboards, reports & status updates | Wikis / Docs                     | Easy installation                               |
-| Unlimited subtasks and dependencies                                  | Goal & metrics tracking                      | Idea Boards                             | Multiple user roles and per project permissions |
-| Milestone management                                                 | Lean & Business Model Canvas                 | Retrospectives                          | Two factor authentication                       |
-| Sprint Management                                                    | SWOT Analysis canvas                         | File Storage via S3 or local filesystem | LDAP, OIDC integration                          |
-| Timetracking & timesheets                                            | Risk Analysis                                | Screen & webcam recording               | Extendable via plugins and API                  |
-|                                                                      | ... and more                                 | Comments/discussions on everything      | Integrates with Slack, Mattermost, Discord      |
-|                                                                      | ... and more                                 |     | Available in over 20 languages                  |     
-*yes, all of these features are included in the OSS version
-<br /><br />
-### 📸 Screenshots ###
+> ⚠️ **Note sur l'état de ce dépôt** : l'historique Git (`git show HEAD:...`) contient l'intégralité du projet Leantime (code applicatif, dépendances déclarées, tests, Docker, CI/CD, documentation). Cependant, **de nombreux fichiers présents dans l'historique Git ont été supprimés du répertoire de travail actuel** (working tree) et n'existent plus physiquement sur disque : `composer.json`, `package.json`, `tests/`, les workflows CI, les fichiers Docker, le `makefile`, `README.md` d'origine, etc. (`git status` les signale comme `D`). Ce README a été reconstitué à partir des informations disponibles dans l'historique Git du dépôt, mais **le répertoire de travail actuel ne contient plus tous ces fichiers**. Voir la section [Points à compléter](#points-à-compléter).
 
-<table width="100%">
-    <tr>
-        <td width="33%"><img alt="Screenshot of Leantime's my work dashboard but with a dark color scheme. All colors are darkened or reverted" src="public/assets/images/Screenshots/dark.png" title="My Work" /></td>
-        <td width="33%"><img alt="Screenshot of Leantime's project dashboard showing a project checklist that has the first box checked, the latest tasks (1 right now), a progress donut chart at 0%" src="public/assets/images/Screenshots/projectDashboard.png" title="Project Dashboard" /></td>
-        <td width="33%"><img alt="Screenshot of Leantime's todo screen in table format. Tasks are grouped by status where each Status has a different color" src="public/assets/images/Screenshots/table.png" title="Grouped To-Dos" /></td>
-    </tr>
-    <tr>
-        <td><img alt="alt text" src="public/assets/images/Screenshots/kanban.png" title="Kanban Board"/></td>
-        <td><img alt="Screenshot of Leantime's timeline or gantt feature showing a timeline with various milestone boxes different in length representing how long these take. Each milestone has a different color and they are connected with an arrow" src="public/assets/images/Screenshots/timeline.png" title="Tasks on timeline" /></td>
-        <td><img alt="Screenshot of Leantime's personal calendar screen showing a month overview with a few tasks" src="public/assets/images/Screenshots/calendar.png" title="Project Calendar" /></td>
-    </tr>
-    <tr>
-        <td><img alt="alt text" src="public/assets/images/Screenshots/goals.png" title="Goals" /></td>
-        <td><img alt="Screenshot of Leantime's wiki page showing one template article of a product requirements document formatted with lists and tables" src="public/assets/images/Screenshots/docs.png" title="Documents &amp; Wikis" /></td>
-        <td><img alt="Screenshot of Leantime's timesheet feature with a table a one week overview and input boxes for each day. Tasks are organized in rows" src="public/assets/images/Screenshots/timesheet.png" title="Timesheets" /></td>
-    </tr>
-</table>
+## Description
 
-<br /><br />
-### ❗System Requirements ###
+Leantime est un système de gestion de projet open source qui combine stratégie, planification et exécution dans une interface pensée pour être accessible aux équipes non spécialisées en gestion de projet (conçu en tenant compte du TDAH, de la dyslexie et de l'autisme, selon la documentation du projet).
 
-* PHP 8.2+
-* MySQL 8.0+ or MariaDB 10.6+
-* Apache or Nginx (IIS works with some modifications)
-* PHP Extensions:
-* BC Math (bcmath)
-* Ctype
-* cURL
-* DOM
-* Exif
-* Fileinfo
-* Filter
-* GD
-* Hash
-* LDAP
-* Multibyte String (mbstring)
-* MySQL
-* OPcache
-* OpenSSL
-* PCNTL
-* PCRE
-* PDO
-* Phar
-* Session
-* Tokenizer
-* Zip
-* SimpleXML
-<br /><br />
+- **Nom du package Composer** : `leantime/leantime`
+- **Nom/version du package NPM** : `leantime` — `3.9.7`
+- **Licence** : AGPL-3.0-only
+- **Site officiel** : https://leantime.io
 
-### ️⚡️ Installation (Production) ###
+## Fonctionnalités
 
-There are two main ways to install LeanTime for production. The first of which is to install all needed pieces of the system locally. The second is to use the officially supported Docker image.
+D'après la description du projet et l'organisation des modules métier (`app/Domain/`, 44 dossiers), Leantime couvre notamment :
 
-#### Local Production Installation ####
+- Gestion de tâches : Kanban, Gantt (Timeline), tableau, liste, calendrier (`Tickets`, `Calendar`)
+- Planification de projets : tableaux de bord, rapports, objectifs (`Projects`, `Reports`, `Goalcanvas`)
+- Sprints et suivi du temps (`Sprints`, `Timesheets`)
+- Gestion de la connaissance : wiki, idées, commentaires (`Wiki`, `Ideas`, `Comments`)
+- Modèles de canevas (Business Model Canvas, Lean Canvas, SWOT, analyse de risques) (`Canvas`, `Blueprints`, `Logicmodelcanvas`)
+- Gestion des fichiers, avec stockage local ou S3 (`Files`)
+- Authentification : LDAP, OIDC, double authentification (`Auth`, `Ldap`, `Oidc`, `TwoFA`)
+- Système de plugins extensible (`Plugins`, `Modulemanager`)
+- Notifications, tags, relations entre entités, audit (`Notifications`, `Tags`, `Entityrelations`, `Audit`)
+- API JSON-RPC (`Api`)
+- Internationalisation (fichiers `.ini` dans `app/Language/`)
 
-* Download latest release package (file is called: Leantime-vx.x.x.zip) from the <a href="https://github.com/Leantime/leantime/releases">release page</a>
-* Create an empty MySQL database
-* Upload the entire directory to your server 
-* Point your domain root to the `public/` directory
-* Rename `config/sample.env` to `config/.env`
-* Fill in your database credentials (username, password, host, dbname) in `config/.env`
-* Navigate to `<yourdomain.com>/install`
-* Follow instructions to install database and set up first user account
+## Technologies utilisées
 
-##### IIS Installation Notes #####
+| Domaine | Technologie |
+|---|---|
+| Langage backend | PHP ^8.2 |
+| Framework | Laravel ^11.44 |
+| Base de données | MySQL 8.0+ ou MariaDB 10.6+ (voir [Base de données](#base-de-données)) |
+| Frontend / build | Webpack (Laravel Mix), Tailwind CSS, jQuery, HTMX, Tiptap, FullCalendar, Chart.js |
+| Gestion de dépendances PHP | Composer |
+| Gestion de dépendances JS | npm |
+| Tests | Codeception ^5.1 (tests unitaires et d'acceptance) |
+| Analyse statique | PHPStan, Laravel Pint (style de code), PHP_CodeSniffer |
+| Conteneurisation | Docker / Docker Compose, Helm (Kubernetes) |
+| CI/CD | GitHub Actions |
 
-Whilst the steps above are applicable to Internet Information Services (IIS), there is an additional configuration change that may be required in IIS to ensure full functionality - you need to allow the PATCH method:
+## Architecture
 
-* Open IIS
-* Expand the server and sites on the left and select the LeanTime site
-* Double click on `Handler Mappings`
-* Double click on the PHP handler mapping that is used by the site
-* Click `Request Restrictions…`
-* Click the `Verbs` tab
-* In the `One of the following verbs` text box, add `PATCH` - for example: `GET,HEAD,POST,PATCH`
-* Click `OK`
-* In the `Executable (optional)` text box, put a double quote character (`“`) at the start and at the end of the path to the `php-cgi.exe` file (_this isn't needed if the path doesn't have a space in it_)
-* Click `OK`
-* A popup will appear asking if you want to create a FastCGI application - click `Yes`
+L'architecture est décrite dans `CLAUDE.md` (présent dans l'historique Git) comme une architecture orientée domaine (« domain-driven ») bâtie sur Laravel 11 :
 
-Note: You may need to repeat this when you upgrade PHP.
+- **`app/Core/`** : composants du framework et extensions Laravel (authentification, base de données, routage, middlewares, gestion des plugins, etc.)
+- **`app/Domain/`** : ~44 modules métier, chacun suivant typiquement la structure Controllers → Services → Repositories → Models → Templates
+- **`app/Plugins/`** : système de plugins (sous-module Git pointant vers un dépôt privé pour les extensions commerciales ; vide dans la version open source)
+- **`app/Views/`** : vues partagées (layouts, composants Blade, sections communes)
 
-#### Production Installation via Docker ####
+Le projet est en migration progressive :
+- de jQuery/AJAX vers **HTMX** (partiel),
+- de templates legacy `.tpl.php` vers **Blade** `.blade.php` (partiel),
+- d'événements basés sur des chaînes vers des événements typés par classe (partiel).
 
-We maintain an official <a href="https://hub.docker.com/r/leantime/leantime">Docker image on dockerhub</a>. 
-To run the image enter your MySQL credentials and execute. You can pass in all the configuration variables from .env
+> Ces informations proviennent de `CLAUDE.md` dans l'historique Git ; ce fichier n'est plus présent sur disque dans le répertoire de travail actuel.
+
+## Structure du projet
+
+Arborescence attendue du projet telle que décrite par l'historique Git (à comparer avec l'état réel du répertoire de travail, voir avertissement en tête de document) :
 
 ```
-docker run -d --restart unless-stopped -p 8080:8080 --network leantime-net \
--e LEAN_DB_HOST=mysql_leantime \
--e LEAN_DB_USER=admin \
--e LEAN_DB_PASSWORD=321.qwerty \
--e LEAN_DB_DATABASE=leantime \
--e LEAN_EMAIL_RETURN=changeme@local.local \
---name leantime leantime/leantime:latest
+.
+├── app/
+│   ├── Core/           # Composants du framework (auth, DB, routing, middlewares...)
+│   ├── Domain/          # ~44 modules métier (Tickets, Projects, Users, Wiki...)
+│   ├── Plugins/          # Système de plugins (sous-module Git, privé)
+│   ├── Views/            # Vues partagées (layouts, composants Blade)
+│   ├── Language/         # Fichiers de traduction (.ini)
+│   └── Command/          # Commandes CLI (artisan étendu)
+├── bin/                  # Exécutable CLI (bin/leantime)
+├── bootstrap/            # Amorçage de l'application
+├── config/               # Configuration (.env, sample.env)
+├── database/             # Migrations / structure de base de données
+├── public/               # Racine web (assets, dist, thèmes)
+├── storage/               # Logs, cache, sessions
+├── tests/                # Tests Codeception (Unit / Acceptance)
+├── composer.json          # Dépendances PHP
+├── package.json           # Dépendances JS
+├── makefile               # Commandes de build/test/déploiement
+└── userfiles/             # Fichiers utilisateurs uploadés
 ```
 
-Unless you have a database defined somewhere else you should use our [docker-compose file](https://github.com/Leantime/docker-leantime/blob/master/docker-compose.yml). 
+**Répertoire de travail actuel constaté** : seuls `app/`, `bin/`, `bootstrap/`, `config/`, `public/`, `storage/`, `userfiles/` et `vendor/` sont présents sur disque au moment de la rédaction de ce README.
 
-Once started you can go to `<yourdomain.com>/install` and run the installation script.
+## Prérequis
 
-**Important: If you are planning to use plugins you need to mount the plugin folder `plugins:/var/www/html/app/Plugins` and ensure the www-data user has access to it. Otherwise installation may fail or plugins will be removed after a restart**
+D'après le `README.md` original et `CLAUDE.md` (historique Git) :
 
-##### Docker Installation Notes #####
+- PHP 8.2 ou supérieur
+- MySQL 8.0+ ou MariaDB 10.6+ (ou PostgreSQL, voir [Base de données](#base-de-données))
+- Apache ou Nginx (IIS possible avec adaptations)
+- Extensions PHP requises : BC Math (bcmath), Ctype, cURL, DOM, Exif, Fileinfo, Filter, GD, Hash, LDAP, Multibyte String (mbstring), MySQL, OPcache, OpenSSL, PCNTL, PCRE, PDO, Phar, Session, Tokenizer, Zip, SimpleXML
+- Node.js et npm (pour la compilation des assets front-end)
+- Composer
 
-If you intend to place Leantime behind a reverse proxy (nginx, etc.) to handle custom domain name resolution and SSL offloading, you will need to set the following environment variable in docker
+## Installation
+
+> Les commandes ci-dessous proviennent du `makefile` et de `CLAUDE.md` présents dans l'historique Git. **Ces fichiers ne sont plus présents dans le répertoire de travail actuel** ; il faut les restaurer (`git checkout HEAD -- makefile composer.json package.json`) avant de pouvoir les exécuter tels quels.
+
+### Installation manuelle (développement)
+
+```bash
+# Installer les dépendances (PHP + JS)
+make install-deps-dev
+
+# Compiler les assets pour le développement
+make build-dev
+
+# Pointer le serveur web vers le dossier public/
+# Créer la base de données MySQL/MariaDB
+# Copier config/sample.env vers config/.env et le configurer
+# Se rendre sur <votre-domaine>/install
 ```
--e LEAN_APP_URL=https://yourdomain.com \
+
+### Installation avec Docker (recommandé pour le développement)
+
+```bash
+# Construire l'environnement de développement
+make clean build
+
+# Démarrer les services (app, MailDev, phpMyAdmin, S3Ninja)
+make run-dev
 ```
-* Update yourdomain.com to your custom domain name.
-<br /><br />
-### 🤓 Installation (Development) ###
 
-There are two ways to install a development setup of LeanTime. The first (but most technical) is to install all pieces of the system locally. The second (and preferred method) is to use a docker containerized development environment.
+Services exposés d'après `CLAUDE.md` :
 
-#### Local Development Installation ####
+| Service | URL |
+|---|---|
+| Application Leantime | http://localhost:8090 |
+| MailDev (test d'e-mails) | http://localhost:8081 |
+| phpMyAdmin | http://localhost:8082 (identifiants : `leantime` / `leantime`) |
+| S3Ninja (test S3) | http://localhost:8083 |
 
-* Clone repository to your local server
-* Create MySQL database
-* Run webpack builder via `make build-dev`
-* Point your local domain to the `public/` directory
-* Rename `config/sample.env` to `config/.env`
-* Fill in your database credentials (username, password, host, dbname) in `config/.env`
-* Navigate to `<localdomain>/install`
-* Follow instructions to install database and user account
+### Installation en production
 
-#### Development Installation via Docker ####
+> À compléter — le README d'origine décrit une installation locale et une installation via l'image Docker officielle (`leantime/leantime` sur Docker Hub), mais le détail complet de la procédure de production n'a pas été vérifié dans ce répertoire.
 
-For development, we use a dockerized development environment. You will need to have ``docker``, ``docker compose``, ``make``, ``composer``, ``git`` and ``npm`` installed.
+## Configuration
 
-* Notes for Windows Environments:
-    - Run all commands within the git bash terminal in order to utilize unix specific commands
-    - If installing php from a zip file, make sure to configure php.ini
-    It does not exist initially, so copy C:\php\php.ini-development to C:\php\php.ini. You will also need to edit php.ini in a text editor and enable all needed extensions for the build process. You can find these by running the make commands and looking for any extensions that error out as missing. You can enable them by searching php.ini for the extension that will look like: `;extension=gd` and removing the semicolon. 
+La configuration se fait via un fichier `.env` dans `config/` (`config/sample.env` sert de modèle, présent dans l'historique Git). Variables identifiées :
 
-In order to build the development docker image, in the root of this repository, run a primer with
+| Variable | Description | Obligatoire | Exemple |
+|---|---|---|---|
+| `LEAN_APP_URL` | URL de base, utile seulement pour une installation en sous-dossier | Optionnelle | `''` |
+| `LEAN_APP_DIR` | Base de l'application sans slash final (utilisé pour les cookies) | Optionnelle | `''` |
+| `LEAN_DEBUG` | Active le mode debug | Optionnelle | `0` |
+| `LEAN_PERMISSIONS_ENFORCE` | Applique les refus de permissions `#[RequiresPermission]` (sinon mode audit) | Optionnelle | `true` |
+| `LEAN_DB_HOST` | Hôte de la base de données | **Obligatoire** | `'localhost'` |
+| `LEAN_DB_USER` | Utilisateur de la base de données | **Obligatoire** | — |
+| `LEAN_DB_PASSWORD` | Mot de passe de la base de données | **Obligatoire** | — |
+| `LEAN_DB_DATABASE` | Nom de la base de données | **Obligatoire** | — |
+| `LEAN_DB_PORT` | Port de la base de données | **Obligatoire** | `'3306'` (5432 pour PostgreSQL) |
+| `LEAN_DB_DEFAULT_CONNECTION` | Pilote de base de données : `mysql` ou `pgsql` | Optionnelle | `'mysql'` |
+| `LEAN_DB_SCHEMA` | Schéma PostgreSQL (si `pgsql`) | Optionnelle | `'public'` |
+| `LEAN_DB_SSLMODE` | Mode SSL PostgreSQL | Optionnelle | `'prefer'` |
+| `LEAN_DB_PERSISTENT_CONNECTIONS` | Active le pool de connexions persistantes | Optionnelle | `true` |
+| `LEAN_DB_MAX_CONNECTIONS` / `LEAN_DB_MIN_CONNECTIONS` | Bornes du pool de connexions | Optionnelle | `100` / `1` |
+| `LEAN_DB_CONNECTION_TIMEOUT` / `LEAN_DB_IDLE_TIMEOUT` | Timeouts de connexion (secondes) | Optionnelle | `30` / `300` |
+| `LEAN_SESSION_PASSWORD` | Sel utilisé pour les sessions (à remplacer par une valeur forte) | Optionnelle | *(valeur générée)* |
+| `LEAN_SESSION_EXPIRATION` | Expiration de session en **minutes** | Optionnelle | `480` |
+| `LEAN_SITENAME` | Nom du site | Optionnelle | `'Leantime'` |
+| `LEAN_LANGUAGE` | Langue par défaut | Optionnelle | `'en-US'` |
+| `LEAN_DEFAULT_TIMEZONE` | Fuseau horaire par défaut | Optionnelle | `'America/Los_Angeles'` |
+| `LEAN_LOG_PATH` | Chemin du fichier de log | Optionnelle | `''` |
+| `LEAN_LOG_CHANNELS` | Canaux de log (`single`, `syslog`, `sentry`, `stderr`) | Optionnelle | `'single,syslog,sentry'` |
+| `LEAN_USE_S3` | Utiliser S3 au lieu du stockage local | Optionnelle | `false` |
+| `LEAN_S3_KEY` / `LEAN_S3_SECRET` / `LEAN_S3_BUCKET` / `LEAN_S3_REGION` | Identifiants et configuration S3 | Optionnelle (si `LEAN_USE_S3=true`) | — |
+| `LEAN_EMAIL_USE_SMTP` | Utiliser SMTP plutôt que `mail()` PHP | Optionnelle | `false` |
+| `LEAN_EMAIL_SMTP_HOSTS` / `_AUTH` / `_USERNAME` / `_PASSWORD` / `_PORT` | Paramètres SMTP | Optionnelle (si SMTP activé) | — |
+| `LEAN_LDAP_USE_LDAP` | Activer l'authentification LDAP | Optionnelle | `false` |
+| `LEAN_LDAP_HOST` / `_PORT` / `_DN` / `_KEYS` | Paramètres de connexion LDAP | Optionnelle (si LDAP activé) | — |
+| `LEAN_OIDC_ENABLE` | Activer OpenID Connect | Optionnelle | `true` |
+| `LEAN_OIDC_CLIEND_ID` / `_CLIEND_SECRET` / `_PROVIDER_URL` | Paramètres OIDC | Optionnelle (si OIDC activé) | — |
+| `LEAN_RATELIMIT_GENERAL` / `_AUTH` / `_API` | Limites de débit des requêtes | Optionnelle | `50000` |
+| `LEAN_USE_REDIS` | Utiliser Redis pour le cache | Optionnelle | `false` |
+| `CACHE_DRIVER` / `SESSION_DRIVER` / `QUEUE_CONNECTION` | Pilotes Laravel (cache, session, file d'attente) | Optionnelle | `file` / `file` / `sync` |
+| `APP_ENV` / `APP_DEBUG` / `APP_KEY` / `APP_URL` | Variables standard Laravel | **Obligatoire** (`APP_KEY`) | voir `config/sample.env` |
 
-```make clean build```
+> Liste non exhaustive : `config/sample.env` (historique Git, ~216 lignes) documente l'intégralité des options. Ce fichier n'est plus présent sur disque dans le répertoire de travail actuel.
 
-afterwards, run 
+## Utilisation
 
-```make run-dev```
+> Toutes les commandes ci-dessous proviennent du `makefile` (historique Git). Le `makefile` n'existe plus sur disque dans le répertoire de travail actuel — le restaurer avant utilisation.
 
-this will start the development server on port 5080.
+### Développement
 
-The dev environment provides a MySQL server, mail server, s3 server, and should be good to go for your needs out of the box. The basic configuration of the development environment is already defined in the composer file. You can create .env file inside of `config/.env` to augment the base configuration by setting some of the configs out of sample.env). **Important: Don't update the database information as this will disconnect the app from the docker database**. The applications you get are as follows
+```bash
+make install-deps-dev    # Installer les dépendances de développement (npm + composer)
+make build-dev           # Build de développement (avec source maps)
+make run-dev             # Démarrer l'environnement Docker de développement
+npx mix                  # Build JS/CSS via webpack
+```
 
-* [http://localhost:5080](http://localhost:5080) : leantime
-* [http://localhost:8081](http://localhost:8081) : maildev - to check emails sent
-* [http://localhost:8082](http://localhost:8082) : phpMyAdmin(authentication ``leantime:leantime``) to check the DB schema and data
-* [http://localhost:8083](http://localhost:8083) : s3ninja - to check s3 uploads. You need to enable this in the ``.dev/.env`` file by enabling s3
+### Production
 
-Additionally, Xdebug is enabled, but you will have to modify your 
-IDE key in the ``.dev/xdebug.ini`` file(or alternatively, on your IDE). You also need to have port 9003 temporarily open on your firewall so you can utilize it effectively. This is because connections from docker to the host will count as external inbound connections
-<br /><br />
+```bash
+make install-deps        # Installer les dépendances de production (composer --no-dev)
+make build               # Build de production
+make package             # Empaqueter une release (zip/tar.gz)
+```
 
-### Run Tests
+### Build
 
-Static Analysis `make phpstan`<br />
-Code Style `make test-code-style` (to fix code style automatically use `make fix-code-style`)<br />
-Unit Tests `make unit-test`<br />
-Acceptance Tests `make acceptance-test`<br /> (requires docker)
+```bash
+npx mix              # Build standard
+npx mix --production # Build optimisé pour la production
+```
 
-You can test individual acceptance test groups directly using:<br />
-For api: <br />
-`docker compose --file .dev/docker-compose.yaml --file .dev/docker-compose.tests.yaml exec leantime-dev php vendor/bin/codecept run -g api --steps`<br />
-For timesheets: <br />
-`docker compose --file .dev/docker-compose.yaml --file .dev/docker-compose.tests.yaml exec leantime-dev php vendor/bin/codecept run -g timesheet --steps`<br />
+### Lint / Format
 
+```bash
+make test-code-style   # Vérifier le style de code (Laravel Pint)
+make fix-code-style    # Corriger le style de code (Laravel Pint)
+make codesniffer       # Analyse PHP_CodeSniffer
+make codesniffer-fix   # Correction automatique PHP_CodeSniffer
+make phpstan           # Analyse statique (PHPStan, niveau 0)
+```
 
-###  🏗 Update ###
+### Tests
 
-#### Manual
-* Make sure to take a backup of your database and files
-* Replace all files in your directory with the updated version
-* If there were any database changes, the system will redirect you to `<yourdomain.com>/update`
+```bash
+make unit-test              # Tests unitaires (Codeception, via Docker)
+make acceptance-test        # Tests d'acceptance (Codeception + Selenium, via Docker)
+make api-test                # Tests API (Codeception, via Docker)
+make acceptance-test-ci      # Tests d'acceptance (variante CI)
+make bearer-api-test-ci      # Tests API avec authentification Bearer (variante CI)
+```
 
-#### CLI
-* Run `php bin/leantime system:update` 
+Groupes de tests d'acceptance disponibles (d'après `CLAUDE.md`) : `api`, `timesheet`, `login`, `ticket`, `user`.
 
-#### Docker
-* Before updating, make sure your mysql container was started using a mounted volume, otherwise your content will be deleted
-* Delete/Stop existing container
-* Pull the latest docker image and rebuild using your compose file 
+```bash
+docker compose --file .dev/docker-compose.yaml --file .dev/docker-compose.tests.yaml \
+  exec leantime-dev php vendor/bin/codecept run -g api --steps
+```
 
+## API
 
-### Common Issues
+Le projet expose une API interne organisée en JSON-RPC, d'après `CLAUDE.md` : toute méthode publique d'une classe de service peut être appelée via un point d'entrée de la forme `leantime.rpc.{domaine}.{service}.{méthode}`. L'annotation `@api` marque les méthodes destinées à l'API mais n'est pas appliquée strictement à l'exécution.
 
-Please refer to our [documentation](https://docs.leantime.io/installation/common-issues) about common issues found when installing or updating Leantime 
+Le module `app/Domain/Api/` gère cette couche API.
 
-## 🔌 Extend Leantime ##
+> Description précise des routes, de l'authentification par jeton Bearer (`CreateBearerTokenCommand`) et du format des requêtes/réponses : à compléter — non déterminable avec certitude sans lecture approfondie du code (`app/Domain/Api/`, `tests/Httprequests/`).
 
-#### You can extend Leantime by:
-- building your own plugin: [Plugin Docs](https://docs.leantime.io/development/plugin-development)
-- using our json-rpc API: [API Docs](https://docs.leantime.io/api/usage)
-- or by purchasing a plugin from our [marketplace](https://marketplace.leantime.io)
+## Base de données
 
+- **Moteur** : MySQL 8.0+ ou MariaDB 10.6+, avec un support PostgreSQL apparaissant dans `config/sample.env` (`LEAN_DB_DEFAULT_CONNECTION = 'pgsql'`).
+- **ORM / accès aux données** : couche d'abstraction propre au projet (`app/Core/Db/` : `Db`, `Repository`, `DbColumn`, `DatabaseHelper`), au-dessus de Laravel (Doctrine DBAL est une dépendance Composer : `doctrine/dbal`).
+- **Migrations** : un dossier `database/` est présent dans l'historique Git ; commande CLI `MigrateCommand` disponible via `php bin/leantime`.
+- **Seed** : Non déterminable à partir du dépôt (aucun mécanisme de seed explicite identifié dans les fichiers analysés).
+- **Sauvegarde** : une commande `BackupDbCommand` (`app/Command/`) et une variable `LEAN_DB_BACKUP_PATH` existent pour la sauvegarde locale de la base.
 
-## 🛟 Let us install it for you. ##
+## Docker
 
-Hassle free installation service in your environments. We can do full installations, updates, configurations or plugin installations. See our [Marketplace](https://marketplace.leantime.io/product-category/services/technical/) for details.<br/><br/>
+Fichiers Docker identifiés dans l'historique Git (non présents actuellement sur disque) :
 
-## ☁️ Not interested in hosting yourself? Let us do it for you ##
+- `leantime-3.9.7/.docker/Dockerfile` : image de production, build multi-stage sur `php:8.3-fpm-alpine`, avec extensions PHP (mysqli, pdo_mysql, pdo_pgsql, bcmath, mbstring, exif, gd, ldap...) compilées pour plusieurs plateformes.
+- `leantime-3.9.7/.dev/dockerfile` et `leantime-3.9.7/.dev/docker-compose.yaml` : environnement de développement (app + MailDev + phpMyAdmin + S3Ninja).
+- `leantime-3.9.7/.dev/docker-compose.tests.yaml` : surcouche pour l'exécution des tests.
 
-We offer [managed hosting plans](https://leantime.io/managed-hosting/) as well as a [SaaS product](https://leantime.io/pricing/) so you can get all the benefits of Leantime without the hassle.
-Head to [leantime.io](https://leantime.io/) for more information.
-<br /><br />
+```bash
+# Démarrer l'environnement de développement
+docker compose --file .dev/docker-compose.yaml up --detach --build --remove-orphans
+```
 
-## 🤙 Need technical support? ##
+Une image officielle est également publiée sur Docker Hub sous le nom `leantime/leantime` (mentionnée dans le badge du `README.md` d'origine).
 
-We can help you set up Leantime in your environment and customize it to your needs. Our support plans are [outlined on our website](https://leantime.io/priority-support/).
+> À compléter : ces fichiers Docker doivent être restaurés dans le répertoire de travail (`git checkout HEAD -- leantime-3.9.7/.docker leantime-3.9.7/.dev`) pour être utilisables.
 
-Please note: We currently only support the official Leantime docker compose and standard installations. 
-We only offer support for the most recent version. 
+## Déploiement
 
-We do not offer support for Cloudron, Elestio, Turnkey, or other external distribution platforms sharing unofficial versions of Leantime. 
+- Un chart **Helm** (`helm/`) est présent dans l'historique Git, avec templates de `deployment`, `service`, `hpa` (autoscaling horizontal), `ingress`, `pvc`, `serviceaccount`, suggérant un déploiement type **Kubernetes**.
+- La cible `make package` du `makefile` construit une archive de release (`.zip` / `.tar.gz`) prête à être déployée sur un serveur classique (Apache/Nginx + PHP-FPM).
+- Procédure détaillée de déploiement en production (au-delà de l'installation locale/Docker) : **Non déterminable à partir du dépôt.**
 
-## 🫴 Contributing
+## CI/CD
 
-We're excited you are interested in contributing to Leantime. We want to make sure you have a great experience contributing to Leantime and that the new features you build will make it into core. 
-<br />
+Workflows GitHub Actions identifiés dans l'historique Git (`.github/workflows/`), non présents actuellement sur disque :
 
-### 🪲 Bugs
+| Workflow | Rôle apparent |
+|---|---|
+| `acceptancetests.yml` | Exécution des tests d'acceptance |
+| `api-bearer-tests.yml` | Tests de l'API avec authentification Bearer |
+| `codeStyleAnalysis.yml` | Vérification du style de code |
+| `makefile.yml` | Exécution de cibles du `makefile` en CI |
+| `release-prepare.yml` | Préparation d'une release |
+| `release.yml` | Publication d'une release |
+| `security.yml` | Analyse de sécurité |
+| `staticAnalysis.yml` | Analyse statique (PHPStan) |
+| `unittests.yml` | Exécution des tests unitaires |
+| `update-latest-tag.yml` | Mise à jour du tag `latest` |
 
-Find an issue on Github (or create a new one) add your name to it or comment that you will be working on it. Once fixed, create a  Pull Request.
+> Le contenu détaillé de chaque workflow n'a pas été inspecté ligne à ligne ; les rôles ci-dessus sont déduits des noms de fichiers.
 
-### New Features in Core
+## Dépendances principales
 
-If you have an idea about new features please reach out to us on Discord. This is where we coordinate feature development and discuss whether core is the right place to add your new features (Plugins is the alternative). 
+### PHP (`composer.json`)
 
-### 🌏 Translations
+| Bibliothèque | Rôle |
+|---|---|
+| `laravel/framework` (^11.44) | Framework applicatif principal |
+| `guzzlehttp/guzzle` | Client HTTP |
+| `aws/aws-sdk-php`, `league/flysystem-aws-s3-v3` | Intégration stockage S3 |
+| `phpmailer/phpmailer` | Envoi d'e-mails |
+| `robthree/twofactorauth`, `endroid/qr-code` | Authentification à deux facteurs (2FA) |
+| `laravel/sanctum` | Authentification API par jeton |
+| `laravel/socialite` + `socialiteproviders/*` | Connexion via fournisseurs tiers (Google, GitHub, GitLab, Microsoft, Okta, Keycloak, SAML2...) |
+| `symfony/dotenv`, `symfony/cache`, `symfony/yaml` | Composants Symfony (config, cache, YAML) |
+| `sentry/sentry-laravel` | Suivi des erreurs (Sentry) |
+| `stripe/stripe-php` | Paiements Stripe |
+| `sabre/dav` | Support CalDAV/WebDAV |
+| `prism-php/prism`, `inspector-apm/neuron-ai`, `hkulekci/qdrant` | Fonctionnalités liées à l'IA / recherche vectorielle |
+| `laravel/mcp` | Support du protocole MCP |
+| `phpseclib/phpseclib` | Cryptographie |
 
-Language files and translations are stored in `app/Language/* `. Once updates please create a Pull Request. 
+### JS (`package.json`)
 
-### 👥 Community Support
+| Bibliothèque | Rôle |
+|---|---|
+| `@tiptap/*` | Éditeur de texte riche (wiki, commentaires) |
+| `fullcalendar`, `@fullcalendar/*` | Vues calendrier |
+| `chart.js` | Graphiques et rapports |
+| `htmx.org` | Mises à jour partielles de page (migration en cours, cf. architecture) |
+| `mermaid` | Diagrammes (probable usage dans le wiki) |
+| `gridstack`, `packery`, `isotope-layout`, `masonry-layout` | Mise en page en grille (tableaux de bord, kanban) |
+| `jquery`, `jquery-ui-dist` | Framework JS legacy encore en usage |
+| `tailwindcss`, `less` | Styles |
+| `webpack`, `laravel-mix` | Build des assets |
 
-* Documentation [https://docs.leantime.io](https://docs.leantime.io)
-* Community Chat [Discord](https://discord.gg/4zMzJtAq9z)
-* File a bug report [https://github.com/Leantime/leantime/issues/new](https://github.com/Leantime/leantime/issues/new)
-* Translations [https://crowdin.com/project/leantime](https://crowdin.com/project/leantime)
-<br /><br />
-## ⚖️ LICENSE Exceptions
+### Outils de développement / qualité
 
-Leantime is licensed under AGPLv3.
-This file forms part of the Leantime Software for which the following exception is added: Plugins within the `/app/Plugins` directory which may contain plugins licensed under other licenses including our enterprise license.
+| Outil | Rôle |
+|---|---|
+| `codeception/codeception` | Framework de tests (unitaires + acceptance) |
+| `phpstan/phpstan` | Analyse statique |
+| `laravel/pint` | Formatage du code PHP |
+| `squizlabs/php_codesniffer` | Style de code PHP |
+| `roave/security-advisories` | Blocage de dépendances vulnérables connues |
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=856e290f-a6e9-4fbd-9b95-a835e39a0492" />
+## Bonnes pratiques
+
+D'après `CLAUDE.md` (historique Git) :
+
+- Privilégier **HTMX** plutôt que jQuery/AJAX pour les nouvelles fonctionnalités asynchrones.
+- Privilégier les templates **Blade** (`.blade.php`) plutôt que les templates legacy `.tpl.php` pour tout nouveau développement.
+- Privilégier les **événements basés sur des classes** plutôt que les événements basés sur des chaînes lorsque c'est pratique.
+- Le dossier `app/Plugins/` est un sous-module Git privé : il apparaît vide dans la version open source, ce qui est normal.
+
+## Dépannage
+
+Non déterminable à partir du dépôt : aucun fichier de type FAQ, `TROUBLESHOOTING.md` ou section dédiée n'a été identifié dans les fichiers analysés.
+
+## Licence
+
+**AGPL-3.0-only** (GNU Affero General Public License v3), telle que déclarée dans `composer.json` et le fichier `LICENSE` présent dans l'historique Git.
+
+## Points à compléter
+
+- **Cohérence du répertoire de travail** : de très nombreux fichiers versionnés dans Git (`composer.json`, `package.json`, `makefile`, `README.md` d'origine, `tests/`, `.github/workflows/`, fichiers Docker, `CLAUDE.md`, `LICENSE`, etc.) sont absents du répertoire de travail actuel (`git status` les marque `D`). Il conviendra de déterminer si cette suppression est intentionnelle, ou s'il faut restaurer ces fichiers (`git checkout HEAD -- <fichier>`).
+- **Structure `leantime-3.9.7/`** : ce dossier de l'historique Git contient une copie complète et redondante du projet (mêmes fichiers `.dev`, `.docker`, `.github`, etc. qu'à la racine). Sa raison d'être n'est pas déterminable avec certitude à partir du dépôt seul — À compléter par l'équipe.
+- **Procédure de déploiement en production détaillée** (au-delà de l'installation locale/Docker) — À compléter.
+- **Documentation des routes/API JSON-RPC** (paramètres, authentification Bearer détaillée, exemples de requêtes) — À compléter.
+- **Mécanisme de seed de base de données** — non identifié, à confirmer.
+- **Section Dépannage / FAQ** — absente, à compléter si besoin.
+- **Version actuelle exacte** : `package.json` indique `3.9.7` alors que `CLAUDE.md` mentionne « Current version: 3.6.2 » — incohérence à clarifier avec l'équipe.

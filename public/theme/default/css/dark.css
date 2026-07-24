@@ -1,13 +1,13 @@
 :root {
 
-    --accent1: hsla(34.7, 90.4%, 51.2%, 1);
-    --accent1-hsl: 34.7, 90.4%, 51.2%;
+    --accent1: hsla(198, 100%, 32%, 1);
+    --accent1-hsl: 199, 100%, 20%;
     --accent1-hover: #555;
     --accent1-color: #fff;
     --focus-ring-color: #66b3ff;
 
-    --accent2: hsla(159.8, 43.0%, 37.8%, 1);
-    --accent2-hsl: 159.8, 43.0%, 37.8%;
+    --accent2: hsla(168, 100%, 33%, 1);
+    --accent2-hsl: 168, 100%, 33%;
     --accent2-hover: #555;
     --accent2-color: #fff;
 
