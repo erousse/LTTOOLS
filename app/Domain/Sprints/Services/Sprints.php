@@ -106,14 +106,11 @@ class Sprints extends BaseService
         $sprints = $this->sprintRepository->getAllSprints($projectId);
 
         // Caution: Empty arrays will be false
-        $sprints = $sprints ?: [];
+        if ($sprints) {
+            return $sprints;
+        }
 
-        // Allow plugins (e.g. PgmPro) to append inherited sprints for this project — for
-        // example the sprints owned by the project's parent program. Mirrors the
-        // Tickets::filterTickets extension point.
-        $sprints = self::dispatchFilter('afterGettingAllSprints', $sprints, ['projectId' => $projectId]);
-
-        return $sprints;
+        return [];
     }
 
     /**

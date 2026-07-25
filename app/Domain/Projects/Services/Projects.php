@@ -864,41 +864,17 @@ class Projects extends BaseService implements ChecksProjectAccess
      */
     public function findMyChildren($currentParentId, array $projects): array
     {
-        $childrenByParent = [];
-        foreach ($projects as $project) {
-            $childrenByParent[$project['parent'] ?? 0][] = $project;
-        }
 
-        return $this->buildProjectBranch($currentParentId, $childrenByParent, []);
-    }
-
-    /**
-     * Assembles one branch of the project tree from a parentId => children map.
-     *
-     * The visited set guards against self-referential or cyclic parent data —
-     * without it a project whose parent chain loops back on itself recurses
-     * until memory is exhausted (rendered on every page via the project selector).
-     *
-     * @param  mixed  $parentId  The parent project ID to collect children for.
-     * @param  array  $childrenByParent  Projects grouped by their parent ID.
-     * @param  array<int|string, true>  $visited  Project IDs already on this branch's path.
-     * @return array The assembled branch.
-     */
-    private function buildProjectBranch($parentId, array $childrenByParent, array $visited): array
-    {
         $branch = [];
 
-        foreach ($childrenByParent[$parentId] ?? [] as $project) {
-            if (isset($visited[$project['id']])) {
-                continue;
+        foreach ($projects as $project) {
+            if ($project['parent'] == $currentParentId) {
+                $children = $this->findMyChildren($project['id'], $projects);
+                if ($children) {
+                    $project['children'] = $children;
+                }
+                $branch[] = $project;
             }
-            $visited[$project['id']] = true;
-
-            $children = $this->buildProjectBranch($project['id'], $childrenByParent, $visited);
-            if ($children) {
-                $project['children'] = $children;
-            }
-            $branch[] = $project;
         }
 
         return $branch;
@@ -917,49 +893,22 @@ class Projects extends BaseService implements ChecksProjectAccess
     public function cleanParentRelationship(array $projects): array
     {
 
-        $parentIds = [];
+        $parents = [];
         foreach ($projects as $project) {
-            $parentIds[$project['id']] = $project['parent'];
+            $parents[$project['id']] = $project;
         }
 
         $cleanList = [];
         foreach ($projects as $project) {
-            if (! isset($parentIds[$project['parent']]) || $this->parentChainLoops($project['id'], $parentIds)) {
+            if (isset($parents[$project['parent']])) {
+                $cleanList[] = $project;
+            } else {
                 $project['parent'] = 0;
+                $cleanList[] = $project;
             }
-            $cleanList[] = $project;
         }
 
         return $cleanList;
-    }
-
-    /**
-     * Checks whether a project's parent chain loops back on itself
-     * (self-parent or a longer cycle like A → B → A) within the given set.
-     *
-     * @param  mixed  $projectId  The project ID whose ancestry to walk.
-     * @param  array  $parentIds  Map of project ID => parent ID.
-     * @return bool True when the chain revisits a project (cycle).
-     */
-    private function parentChainLoops($projectId, array $parentIds): bool
-    {
-        $seen = [];
-        $current = $parentIds[$projectId] ?? 0;
-
-        while (! empty($current) && isset($parentIds[$current])) {
-            if ($current == $projectId) {
-                return true;
-            }
-            // An ancestor further up is cyclic, but this project isn't part of the
-            // loop itself — the cycle members get re-rooted, so this link stays valid.
-            if (isset($seen[$current])) {
-                return false;
-            }
-            $seen[$current] = true;
-            $current = $parentIds[$current];
-        }
-
-        return false;
     }
 
     /**
@@ -1486,35 +1435,6 @@ class Projects extends BaseService implements ChecksProjectAccess
     }
 
     /**
-     * Gets all users that can access a project, honoring the project's access level
-     * (psettings): directly assigned users plus — depending on the setting — all
-     * active users ('all') or the client's active users ('clients').
-     *
-     * Use this for assignee/user pickers; use getUsersAssignedToProject() when only
-     * the directly assigned team is wanted (e.g. notifications).
-     *
-     * @param  int  $projectId  The ID of the project.
-     * @return array The users with access to the project.
-     *
-     * @api
-     */
-    #[RequiresPermission(ProjectsPermissions::VIEW, projectIdParam: 'projectId')]
-    public function getUsersWithAccessToProject(int $projectId): array
-    {
-        $users = $this->projectRepository->getUsersWithAccessToProject($projectId);
-
-        foreach ($users as $key => $user) {
-            if (dtHelper()->isValidDateString($user['modified'])) {
-                $users[$key]['modified'] = dtHelper()->parseDbDateTime($user['modified'])->toIso8601ZuluString();
-            } else {
-                $users[$key]['modified'] = null;
-            }
-        }
-
-        return $users;
-    }
-
-    /**
      * Checks if a user is assigned to a particular project.
      *
      * @param  int  $userId  The ID of the user being checked.
@@ -1555,8 +1475,6 @@ class Projects extends BaseService implements ChecksProjectAccess
      *                         - dollarBudget: int (optional) The dollar budget for the project (defaults to 0).
      *                         - psettings: string (optional) The project settings (defaults to 'restricted').
      *                         - type: string (fixed value 'project') The type of the project.
-     *                         - parent: int (optional) Id of a container project (program/strategy) to nest
-     *                         the new project under. Ignored unless it references a program or strategy.
      *                         - start: string|null The start date of the project in user format or null.
      *                         - end: string|null The end date of the project in user format or null.
      * @return int|false The ID of the added project, or false if the project could not be added.
@@ -1567,17 +1485,6 @@ class Projects extends BaseService implements ChecksProjectAccess
     public function addProject(array $values): int|false
     {
 
-        // A project may only be nested under a CONTAINER project (a program or a strategy),
-        // never under another regular project. Validated here (not just in the controller)
-        // because this method is also reachable via JSON-RPC.
-        $parent = null;
-        if (! empty($values['parent'])) {
-            $parentProject = $this->projectRepository->getProject((int) $values['parent']);
-            if (is_array($parentProject) && in_array($parentProject['type'] ?? '', ['program', 'strategy'], true)) {
-                $parent = (int) $values['parent'];
-            }
-        }
-
         $values = [
             'name' => $values['name'],
             'details' => $values['details'] ?? '',
@@ -1587,7 +1494,6 @@ class Projects extends BaseService implements ChecksProjectAccess
             'dollarBudget' => $values['dollarBudget'] ?? 0,
             'psettings' => $values['psettings'] ?? 'restricted',
             'type' => 'project',
-            'parent' => $parent,
             'start' => $values['start'] ?? null,
             'end' => $values['end'] ?? null,
         ];
@@ -1934,45 +1840,7 @@ class Projects extends BaseService implements ChecksProjectAccess
     #[RequiresPermission(ProjectsPermissions::EDIT, global: true)]
     public function patch($id, $params): bool
     {
-        $params = $this->rejectCyclicParent((int) $id, $params);
-
         return $this->projectRepository->patch($id, $params);
-    }
-
-    /**
-     * Drops a parent assignment that would make the project its own ancestor.
-     *
-     * A project pointing at itself (or at one of its descendants) creates a cycle in
-     * the hierarchy, which used to hang the project selector on every page. Invalid
-     * assignments are removed from the value set so the stored parent stays unchanged.
-     *
-     * @param  int  $projectId  The project being written.
-     * @param  array  $values  The values about to be persisted.
-     * @return array The values with any cyclic parent assignment removed.
-     */
-    private function rejectCyclicParent(int $projectId, array $values): array
-    {
-        if (empty($values['parent'])) {
-            return $values;
-        }
-
-        $current = (int) $values['parent'];
-        $steps = 0;
-
-        while ($current > 0 && $steps < 100) {
-            if ($current === $projectId) {
-                Log::warning("Rejected parent assignment for project {$projectId}: parent {$values['parent']} would create a hierarchy cycle.");
-                unset($values['parent']);
-
-                return $values;
-            }
-
-            $parentProject = $this->projectRepository->getProject($current);
-            $current = (int) ($parentProject['parent'] ?? 0);
-            $steps++;
-        }
-
-        return $values;
     }
 
     /**
@@ -2439,8 +2307,6 @@ class Projects extends BaseService implements ChecksProjectAccess
     #[RequiresPermission(ProjectsPermissions::EDIT, global: true)]
     public function editProject($values, $id)
     {
-        $values = $this->rejectCyclicParent((int) $id, $values);
-
         // Preserve existing type if not provided
         if (! isset($values['type'])) {
             $currentProject = $this->getProject($id);

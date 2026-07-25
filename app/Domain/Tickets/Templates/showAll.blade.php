@@ -43,24 +43,6 @@
 
         <div class="clearfix" style="margin-bottom: 20px;"></div>
 
-        @if (isset($availableProjects))
-            {{-- Program (cross-project) board: consistent inline quick-add with a required
-                 project picker, matching the kanban/list add affordance. --}}
-            <form action="" method="post" class="tw-mb-m" style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap;">
-                <input type="text" name="headline" placeholder="{{ __('input.placeholders.create_task') }}" style="flex:1 1 280px; min-width:240px;" />
-                <select name="quickaddProjectId" class="form-control" required style="width:auto;" aria-label="{{ __('label.project') }}">
-                    <option value="">{{ __('label.project') }}…</option>
-                    @foreach ($availableProjects as $quickAddProjectId => $quickAddProjectName)
-                        <option value="{{ $quickAddProjectId }}">{{ $tpl->escape($quickAddProjectName) }}</option>
-                    @endforeach
-                </select>
-                <input type="hidden" name="sprint" value="{{ $currentSprint }}" />
-                <input type="hidden" name="milestone" value="{{ htmlspecialchars((string) ($searchCriteria['milestone'] ?? ''), ENT_QUOTES, 'UTF-8') }}" />
-                <input type="hidden" name="quickadd" value="1" />
-                <x-global::forms.button tag="input" inputType="submit" contentRole="primary" :labelText="__('buttons.save')" name="saveTicket" />
-            </form>
-        @endif
-
         @if (isset($allTicketGroups['all']))
             @php $allTickets = $allTicketGroups['all']['items']; @endphp
         @endif
@@ -135,17 +117,10 @@
                             <a class='ticketModal' href="#/tickets/showTicket/{{ $row['id'] }}" preload="mouseover">{{ $row['headline'] }}</a></td>
 
                             @php
-                            // On a program (cross-project) board each row must render and edit
-                            // with statuses from ITS OWN project, never a shared set, so a status
-                            // change always writes a key valid in that project.
-                            $rowStatusLabels = (isset($statusLabelsByProject) && isset($statusLabelsByProject[$row['projectId']]))
-                                ? $statusLabelsByProject[$row['projectId']]
-                                : $statusLabels;
-
-                            if (isset($rowStatusLabels[$row['status']])) {
-                                $class = $rowStatusLabels[$row['status']]['class'];
-                                $name = $rowStatusLabels[$row['status']]['name'];
-                                $sortKey = $rowStatusLabels[$row['status']]['sortKey'];
+                            if (isset($statusLabels[$row['status']])) {
+                                $class = $statusLabels[$row['status']]['class'];
+                                $name = $statusLabels[$row['status']]['name'];
+                                $sortKey = $statusLabels[$row['status']]['sortKey'];
                             } else {
                                 $class = 'label-important';
                                 $name = 'new';
@@ -161,7 +136,7 @@
                                     <ul class="dropdown-menu" aria-labelledby="statusDropdownMenuLink{{ $row['id'] }}">
                                         <li class="nav-header border">{!! __('dropdown.choose_status') !!}</li>
                                         @php
-                                        foreach ($rowStatusLabels as $key => $label) {
+                                        foreach ($statusLabels as $key => $label) {
                                             echo "<li class='dropdown-item'>
                                                 <a href='javascript:void(0);' class='".$label['class']."' data-label='".$tpl->escape($label['name'])."' data-value='".$row['id'].'_'.$key.'_'.$label['class']."' id='ticketStatusChange".$row['id'].$key."' >".$tpl->escape($label['name']).'</a>';
                                             echo '</li>';

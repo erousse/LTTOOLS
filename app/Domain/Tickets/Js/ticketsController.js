@@ -1117,39 +1117,33 @@ leantime.ticketsController = (function () {
             var types = jQuery("#typeSelect").val();
             var priority = jQuery("#prioritySelect").val();
             var status = jQuery("#statusSelect").val();
-            var projects = jQuery("#projectsSelect").val();
             var sort = jQuery("#sortBySelect").val();
             var groupBy = jQuery("input[name='groupBy']:checked").val();
             var showTasks = jQuery("input[name='showTasks']:checked").val();
 
-            // Encode each value: these come from the DOM (filter inputs) and are concatenated
-            // into a URL, so encodeURIComponent keeps special characters (&, #, spaces, commas)
-            // from breaking the query and closes the DOM-text-to-navigation sink.
             var query = "?search=true";
             if (project != "" && project != undefined) {
-                query = query + "&projectId=" + encodeURIComponent(project)}
+                query = query + "&projectId=" + project}
             if (users != "" && users != undefined) {
-                query = query + "&users=" + encodeURIComponent(users)}
+                query = query + "&users=" + users}
             if (milestones != ""  && milestones != undefined) {
-                query = query + "&milestone=" + encodeURIComponent(milestones)}
+                query = query + "&milestone=" + milestones}
             if (term != ""  && term != undefined) {
-                query = query + "&term=" + encodeURIComponent(term);}
+                query = query + "&term=" + term;}
             if (sprints != ""  && sprints != undefined) {
-                query = query + "&sprint=" + encodeURIComponent(sprints);}
+                query = query + "&sprint=" + sprints;}
             if (types != "" && types != undefined) {
-                query = query + "&type=" + encodeURIComponent(types);}
+                query = query + "&type=" + types;}
             if (priority != "" && priority != undefined) {
-                query = query + "&priority=" + encodeURIComponent(priority);}
+                query = query + "&priority=" + priority;}
             if (status != "" && status != undefined) {
-                query = query + "&status=" + encodeURIComponent(status);}
-            if (projects != "" && projects != undefined) {
-                query = query + "&projects=" + encodeURIComponent(projects);}
+                query = query + "&status=" + status;}
             if (sort != "" && sort != undefined) {
-                query = query + "&sort=" + encodeURIComponent(sort);}
+                query = query + "&sort=" + sort;}
             if (groupBy != "" && groupBy != undefined) {
-                query = query + "&groupBy=" + encodeURIComponent(groupBy);}
+                query = query + "&groupBy=" + groupBy;}
             if (showTasks != "" && showTasks != undefined) {
-                query = query + "&showTasks=" + encodeURIComponent(showTasks);}
+                query = query + "&showTasks=" + showTasks;}
 
             var rediredirectUrl = url + query;
 
@@ -1168,35 +1162,30 @@ leantime.ticketsController = (function () {
             var types = jQuery("#typeSelect").val();
             var priority = jQuery("#prioritySelect").val();
             var status = jQuery("#statusSelect").val();
-            var projects = jQuery("#projectsSelect").val();
             var sort = jQuery("#sortBySelect").val();
             var groupBy = jQuery("input[name='groupBy']:checked").val();
 
-            // Encode each value (DOM-sourced filter inputs concatenated into a URL) — see the
-            // matching note in initTicketSearchSubmit.
             var query = "?search=true";
         if (project != "" && project != undefined) {
-            query = query + "&projectId=" + encodeURIComponent(project)}
+            query = query + "&projectId=" + project}
         if (users != "" && users != undefined) {
-            query = query + "&users=" + encodeURIComponent(users)}
+            query = query + "&users=" + users}
         if (milestones != ""  && milestones != undefined) {
-            query = query + "&milestone=" + encodeURIComponent(milestones)}
+            query = query + "&milestone=" + milestones}
         if (term != ""  && term != undefined) {
-            query = query + "&term=" + encodeURIComponent(term);}
+            query = query + "&term=" + term;}
         if (sprints != ""  && sprints != undefined) {
-            query = query + "&sprint=" + encodeURIComponent(sprints);}
+            query = query + "&sprint=" + sprints;}
         if (types != "" && types != undefined) {
-            query = query + "&type=" + encodeURIComponent(types);}
+            query = query + "&type=" + types;}
         if (priority != "" && priority != undefined) {
-            query = query + "&priority=" + encodeURIComponent(priority);}
+            query = query + "&priority=" + priority;}
         if (status != "" && status != undefined) {
-            query = query + "&status=" + encodeURIComponent(status);}
-        if (projects != "" && projects != undefined) {
-            query = query + "&projects=" + encodeURIComponent(projects);}
+            query = query + "&status=" + status;}
         if (sort != "" && sort != undefined) {
-            query = query + "&sort=" + encodeURIComponent(sort);}
+            query = query + "&sort=" + sort;}
         if (groupBy != "" && groupBy != undefined) {
-            query = query + "&groupBy=" + encodeURIComponent(groupBy);}
+            query = query + "&groupBy=" + groupBy;}
 
             var rediredirectUrl = url + query;
 

@@ -547,20 +547,12 @@ class DefaultConfig
     public int $ratelimitGeneral = 2000;
 
     /**
-     * @var int rate limit on API requests (per user+IP per minute). 120 = 2 req/s sustained —
-     *          enough for mobile-app sync bursts and integration polling while still catching
-     *          runaway scripts; in line with comparable tools (GitHub ~83/min, Jira ~100/min).
+     * @var int rate limit on api requests
      */
-    public int $ratelimitApi = 120;
+    public int $ratelimitApi = 10;
 
     /**
      * @var int rate limit on auth requests
      */
     public int $ratelimitAuth = 20;
-
-    /**
-     * @var int rate limit on MCP endpoint requests (per user+IP per minute). Higher than the API
-     *          limit because agentic LLM clients burst many parallel tool calls per turn.
-     */
-    public int $ratelimitMcp = 300;
 }
